@@ -75,11 +75,18 @@ export const addMemberToGroup = member => {
 
 export const onDestroyMember = member => {
   return (dispatch, getState) => {
-    let { people: currentPeople, memberGroup: currentMemberGroup } = getState().group
+    let {
+      people: currentPeople, memberGroup: currentMemberGroup, searchQuery
+    } = getState().group
+    let { username, email } = searchQuery
     let memberGroup = [...currentMemberGroup]
     memberGroup = _.filter(memberGroup, mmbr => mmbr.id != member.id)
     let people = [...currentPeople]
-    people.push(member)
+    let matchUsername = member.username.includes(username.trim())
+    let matchEmail = member.email.includes(email.trim())
+    if ((matchUsername && !!username.trim()) || (matchEmail && !!email.trim())) {
+      people.push(member)
+    }
     people = _.orderBy(people, 'name')
     batch(() => {
       dispatch({ memberGroup, type: 'ON_CHANGE_MEMBER_GROUP' })
