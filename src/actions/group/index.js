@@ -14,13 +14,6 @@ export const onChangeSearcQuery = searchQuery => {
   }
 }
 
-const onChangePeople = people => {
-  return {
-    people,
-    type: 'ON_CHANGE_PEOPLE'
-  }
-}
-
 export const onSearchPeople = () => {
   return async (dispatch, getState) => {
     try {
@@ -47,13 +40,32 @@ export const onSearchPeople = () => {
             if (person.email.includes(email.trim())) people.push(person)
           })
         }
-        if (!!people.length) people = _.orderBy(people, 'name')
-        dispatch(onChangePeople(people))
+
+        let { memberGroup } = getState().group
+        if (!!memberGroup.length) {
+          people = _.filter(people, person => {
+            let member = _.find(memberGroup, { id: person.id })
+            if (!member) return person
+          })
+        }
+        if (!!people.length) {
+          people = _.orderBy(people, 'name')
+        }
+        dispatch({ people, type: 'ON_CHANGE_PEOPLE' })
       }
     } catch (e) {
-
-    } finally {
-
+      console.log('Failed to find people! ', e)
     }
+  }
+}
+
+export const addMemberToGroup = member => {
+  return (dispatch, getState) => {
+    let { people: currentPeople, memberGroup: currentMemberGroup } = getState().group
+    let people = _.filter(currentPeople, person => person.id != member.id)
+    let memberGroup = [...currentMemberGroup]
+    memberGroup.push(member)
+    dispatch({ memberGroup, type: 'ON_CHANGE_MEMBER_GROUP' })
+    dispatch({ people, type: 'ON_CHANGE_PEOPLE' })
   }
 }

@@ -3,12 +3,44 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { Table } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTrashAlt } from "@fortawesome/free-solid-svg-icons"
+import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
+import _ from 'lodash'
 
-const propTypes = {}
+const propTypes = {
+  memberGroup: PropTypes.array
+}
+
+const defaultProps = {
+  memberGroup: []
+}
 
 class GroupTable extends React.Component {
+  renderNestedBody(text) {
+    return (
+      <div key={_.random(100000)}>{text}</div>
+    )
+  }
+
+  renderBody(member, index) {
+    return (
+      <tr key={member.id}>
+        <td>{index + 1}</td>
+        <td>{member.name}</td>
+        <td>
+          {member.skills.map(this.renderNestedBody)}
+        </td>
+        <td>
+          {member.certifications.map(this.renderNestedBody)}
+        </td>
+        <td className='text-center align-middle'>
+          <FontAwesomeIcon icon={faTrashAlt} />
+        </td>
+      </tr>
+    )
+  }
+
   render() {
+    let { memberGroup } = this.props
     return (
       <React.Fragment>
         <div>Selected member group:</div>
@@ -23,15 +55,7 @@ class GroupTable extends React.Component {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>1</td>
-              <td>Table cell</td>
-              <td>Table cell</td>
-              <td>Table cell</td>
-              <td className='text-center'>
-                <FontAwesomeIcon icon={faTrashAlt} />
-              </td>
-            </tr>
+            {memberGroup.map((member, index) => this.renderBody(member, index))}
           </tbody>
         </Table>
       </React.Fragment>
@@ -39,5 +63,14 @@ class GroupTable extends React.Component {
   }
 }
 
+const mapStateToProps = state => {
+  let { memberGroup } = state.group
+  return { memberGroup  }
+}
+
+const mapDispatchToProps = dispatch => ({
+})
+
 GroupTable.propTypes = propTypes
-export default GroupTable
+GroupTable.defaultProps = defaultProps
+export default connect(mapStateToProps, mapDispatchToProps)(GroupTable)

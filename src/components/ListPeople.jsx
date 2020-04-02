@@ -3,8 +3,11 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { Card, Button } from 'react-bootstrap'
 
+import { addMemberToGroup } from '../actions/group'
+
 const propTypes = {
-  people: PropTypes.array
+  people: PropTypes.array,
+  addMemberToGroup: PropTypes.func.isRequired
 }
 
 const defaultProps = {
@@ -13,13 +16,14 @@ const defaultProps = {
 
 class ListPeople extends React.Component {
   renderPerson(person) {
+    let { addMemberToGroup } = this.props
     return (
       <Card key={person.id} className='card-green-custom mb-3'>
         <Card.Body>
           <h5 className='display-6'>{person.name}</h5>
           <div>{`Skill : ${person.skills.join(', ')}`}</div>
           <div>{`Certification : ${person.certifications.join(', ')}`}</div>
-          <Button variant='primary' className='btn-blue-custom col'>
+          <Button variant='primary' className='btn-blue-custom col' onClick={() => addMemberToGroup(person)}>
             Add member to group
           </Button>
         </Card.Body>
@@ -44,6 +48,7 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = dispatch => ({
+  addMemberToGroup: member => dispatch(addMemberToGroup(member))
 })
 
 ListPeople.propTypes = propTypes

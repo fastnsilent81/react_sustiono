@@ -2,7 +2,7 @@ let newState
 const group = (state = {
   name: '',
   people: [],
-  peopleGroup: [],
+  memberGroup: [],
   searchQuery: {
     username: '',
     email: ''
@@ -22,6 +22,11 @@ const group = (state = {
     case 'ON_CHANGE_PEOPLE':
       newState = {
         ...state, people: action.people
+      }
+      return newState
+    case 'ON_CHANGE_MEMBER_GROUP':
+      newState = {
+        ...state, memberGroup: action.memberGroup
       }
       return newState
     default:
