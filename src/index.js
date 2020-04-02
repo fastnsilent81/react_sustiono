@@ -4,17 +4,19 @@ import { Provider } from 'react-redux'
 import { createStore, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
 
+import './stylesheet/custom.scss'
+import 'bootstrap/dist/css/bootstrap.min.css'
+
 import logger from '../src/middlewares/logger'
 import rootReducer from '../src/reducers'
+import CreateGroupPanel from '../src/components/CreateGroupPanel'
 
-
-import App from './App'
 import * as serviceWorker from './serviceWorker'
 
 const store = createStore(rootReducer, applyMiddleware(thunk, logger))
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <CreateGroupPanel />
   </Provider>,
   document.getElementById('root')
 )

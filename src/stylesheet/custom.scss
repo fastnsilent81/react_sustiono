@@ -1,0 +1,42 @@
+body {
+  background-color: #434343 !important;
+
+  .navbar {
+    background-color: #666;
+    .root-name {
+      color: #4A95B5;
+    }
+    .slash-path {
+      color: #707777;
+    }
+  }
+
+  .card-panel {
+    .card-header {
+      background-color: #999
+    }
+    .card-grey {
+      background-color: #666
+    }
+    hr.hr-custom {
+      border: 0.5px solid #FFF !important;
+    }
+  }
+
+  .btn-blue-custom {
+    background-color: #20A8D8;
+    border-color: #20A8D8;
+    &:hover, &:active, &:focus {
+      background-color: #20A8E8;
+      border-color: #20A8E8;
+    }
+  }
+
+  .card-green-custom {
+    background-color: #4EBE76;
+  }
+
+  .table.group-table thead th {
+    border-bottom: none;
+  }
+}
