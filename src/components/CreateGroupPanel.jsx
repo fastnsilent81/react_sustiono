@@ -20,7 +20,7 @@ class CreateGroupPanel extends React.Component {
         <div className='col mt-3 card-panel text-white'>
           <Card className='card-grey'>
             <Card.Header>Create Group</Card.Header>
-            <Card.Body className='card-grey'>
+            <Card.Body className='card-grey pb-0'>
               <div className='row ml-3 mr-3'>
                 <div className='col-md-5 col-sm-12'>
                   <GroupForm />

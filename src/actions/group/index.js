@@ -1,4 +1,5 @@
 import _ from 'lodash'
+import { batch } from 'react-redux'
 
 export const onChangeGroupName = name => {
   return {
@@ -65,7 +66,24 @@ export const addMemberToGroup = member => {
     let people = _.filter(currentPeople, person => person.id != member.id)
     let memberGroup = [...currentMemberGroup]
     memberGroup.push(member)
-    dispatch({ memberGroup, type: 'ON_CHANGE_MEMBER_GROUP' })
-    dispatch({ people, type: 'ON_CHANGE_PEOPLE' })
+    batch(() => {
+      dispatch({ memberGroup, type: 'ON_CHANGE_MEMBER_GROUP' })
+      dispatch({ people, type: 'ON_CHANGE_PEOPLE' })
+    })
+  }
+}
+
+export const onDestroyMember = member => {
+  return (dispatch, getState) => {
+    let { people: currentPeople, memberGroup: currentMemberGroup } = getState().group
+    let memberGroup = [...currentMemberGroup]
+    memberGroup = _.filter(memberGroup, mmbr => mmbr.id != member.id)
+    let people = [...currentPeople]
+    people.push(member)
+    people = _.orderBy(people, 'name')
+    batch(() => {
+      dispatch({ memberGroup, type: 'ON_CHANGE_MEMBER_GROUP' })
+      dispatch({ people, type: 'ON_CHANGE_PEOPLE' })
+    })
   }
 }

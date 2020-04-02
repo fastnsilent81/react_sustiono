@@ -6,8 +6,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import _ from 'lodash'
 
+import { onDestroyMember } from '../actions/group'
+
 const propTypes = {
-  memberGroup: PropTypes.array
+  memberGroup: PropTypes.array,
+  onDestroyMember: PropTypes.func.isRequired
 }
 
 const defaultProps = {
@@ -22,6 +25,7 @@ class GroupTable extends React.Component {
   }
 
   renderBody(member, index) {
+    let { onDestroyMember } = this.props
     return (
       <tr key={member.id}>
         <td>{index + 1}</td>
@@ -33,7 +37,7 @@ class GroupTable extends React.Component {
           {member.certifications.map(this.renderNestedBody)}
         </td>
         <td className='text-center align-middle'>
-          <FontAwesomeIcon icon={faTrashAlt} />
+          <FontAwesomeIcon icon={faTrashAlt} onClick={() => onDestroyMember(member)} />
         </td>
       </tr>
     )
@@ -48,7 +52,7 @@ class GroupTable extends React.Component {
           <thead>
             <tr>
               <th>No.</th>
-              <th>Name</th>
+              <th style={{ width: '25%' }}>Name</th>
               <th>Skill and Qualification</th>
               <th>Certification</th>
               <th className='text-center'>Process</th>
@@ -69,6 +73,7 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = dispatch => ({
+  onDestroyMember: member => dispatch(onDestroyMember(member))
 })
 
 GroupTable.propTypes = propTypes
