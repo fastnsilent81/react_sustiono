@@ -36,7 +36,9 @@ class ListPeople extends React.Component {
     return (
       <React.Fragment>
         <div className='mt-3'>People found:</div>
-        { people.map(person => this.renderPerson(person)) }
+        <div className='list-people-wrap'>
+          { people.map(person => this.renderPerson(person)) }
+        </div>
       </React.Fragment>
     )
   }

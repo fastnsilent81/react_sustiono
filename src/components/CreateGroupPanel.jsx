@@ -17,7 +17,7 @@ class CreateGroupPanel extends React.Component {
           </div>
         </Navbar>
 
-        <div className='col mt-3 card-panel text-white'>
+        <div className='col mt-3 mb-3 card-panel text-white'>
           <Card className='card-grey'>
             <Card.Header>Create Group</Card.Header>
             <Card.Body className='card-grey pb-0'>
@@ -38,6 +38,17 @@ class CreateGroupPanel extends React.Component {
               </Button>
             </div>
           </Card>
+        </div>
+
+        <div className='col footer pt-3 pb-3 bg-white'>
+          <div className='row'>
+            <div className='col'>
+              <span>Ericsson</span> © 2020 MOAI.
+            </div>
+            <div className='col text-right'>
+              Powered by <span>CoreUI for React</span>
+            </div>
+          </div>
         </div>
       </React.Fragment>
     )
